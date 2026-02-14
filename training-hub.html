@@ -1,0 +1,2480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Support Training Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', 'Segoe UI', sans-serif;
+            background: #F7F6F2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #C8C0B4;
+            border-radius: 2px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.2s ease;
+        }
+
+        /* Topbar */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 58px;
+            background: rgba(247, 246, 242, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #E5E0D8;
+            display: flex;
+            align-items: center;
+        }
+
+        .topbar-logo {
+            width: 260px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 20px;
+            border-right: 1px solid #E5E0D8;
+            height: 100%;
+            flex-shrink: 0;
+        }
+
+        .topbar-logo-icon {
+            width: 28px;
+            height: 28px;
+            background: #D4622A;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .topbar-logo-text {
+            font-family: Georgia, serif;
+            font-weight: 300;
+            font-size: 15px;
+            color: #1A1714;
+            letter-spacing: -0.3px;
+        }
+
+        .topbar-center {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 12px;
+        }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #9A9390;
+        }
+
+        .breadcrumb-link {
+            color: #5A5350;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .breadcrumb-separator {
+            color: #C8C0B4;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #F0EDE6;
+            border: 1px solid #E5E0D8;
+            border-radius: 7px;
+            padding: 0 12px;
+            height: 32px;
+            width: 200px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 13px;
+            color: #1A1714;
+            flex: 1;
+            font-family: inherit;
+        }
+
+        .search-box input::placeholder {
+            color: #9A9390;
+        }
+
+        .topbar-actions {
+            padding: 0 20px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .topbar-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 15px;
+            color: #5A5350;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 58px;
+            left: 0;
+            width: 260px;
+            height: calc(100vh - 58px);
+            background: #F7F6F2;
+            border-right: 1px solid #E5E0D8;
+            overflow-y: auto;
+            padding: 14px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            z-index: 50;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 7px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            color: #5A5350;
+            background: transparent;
+            font-weight: 400;
+            user-select: none;
+            transition: all 0.15s;
+        }
+
+        .nav-item:hover {
+            background: #F0EDE6;
+        }
+
+        .nav-item.active {
+            color: #D4622A;
+            background: #FBF0EB;
+            font-weight: 500;
+        }
+
+        .nav-item-icon {
+            font-size: 14px;
+            opacity: 0.75;
+            width: 18px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-item-label {
+            flex: 1;
+        }
+
+        .nav-item-badge {
+            background: #D4622A;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 6px;
+            border-radius: 20px;
+            line-height: 1.6;
+        }
+
+        .nav-item-arrow {
+            font-size: 10px;
+            color: #9A9390;
+            transition: transform 0.15s;
+            display: inline-block;
+        }
+
+        .nav-item-arrow.open {
+            transform: rotate(90deg);
+        }
+
+        .nav-separator {
+            height: 1px;
+            background: #E5E0D8;
+            margin: 8px 0;
+        }
+
+        .nav-children {
+            padding-left: 26px;
+            display: none;
+        }
+
+        .nav-children.open {
+            display: block;
+        }
+
+        .nav-child {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #5A5350;
+            background: transparent;
+            font-weight: 400;
+            user-select: none;
+        }
+
+        .nav-child:hover {
+            background: #F0EDE6;
+        }
+
+        .nav-child.active {
+            color: #D4622A;
+            background: #FBF0EB;
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            margin-top: 58px;
+            flex: 1;
+            background: #F7F6F2;
+            min-height: calc(100vh - 58px);
+        }
+
+        /* Cover */
+        .cover {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .cover-gradient {
+            position: absolute;
+            inset: 0;
+        }
+
+        .cover-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.08;
+            background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.5) 1px, transparent 0);
+            background-size: 28px 28px;
+        }
+
+        .cover-emoji {
+            position: absolute;
+            bottom: 24px;
+            left: 52px;
+            font-size: 48px;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 28px 52px 0;
+            max-width: 800px;
+        }
+
+        .page-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .page-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 400;
+            font-size: 36px;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            color: #1A1714;
+            margin-bottom: 12px;
+            white-space: pre-line;
+        }
+
+        .page-chips {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #E5E0D8;
+            margin-bottom: 28px;
+        }
+
+        .chip {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .chip.live {
+            background: #EBFAF2;
+            border: 1px solid #A8D5BF;
+            color: #2E7D55;
+        }
+
+        .chip:not(.live) {
+            background: #F0EDE6;
+            border: 1px solid #E5E0D8;
+            color: #5A5350;
+        }
+
+        .chip-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #2E7D55;
+            display: inline-block;
+        }
+
+        /* Page Body */
+        .page-body {
+            padding: 0 52px 72px;
+            max-width: 800px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 7px 14px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #D4622A;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            border: 1px solid #E5E0D8;
+            background: #F0EDE6;
+            color: #5A5350;
+        }
+
+        .btn-large {
+            padding: 8px 16px;
+        }
+
+        /* Components will be added via JavaScript */
+        .callout {
+            display: flex;
+            gap: 12px;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 24px;
+            border-left-width: 3px;
+            border-left-style: solid;
+        }
+
+        .callout-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .callout-content {
+            font-size: 14px;
+            line-height: 1.65;
+            color: #5A5350;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 32px 0 14px;
+        }
+
+        .section-title h2 {
+            font-family: 'Fraunces', serif;
+            font-weight: 400;
+            font-size: 21px;
+            letter-spacing: -0.02em;
+            color: #1A1714;
+            white-space: nowrap;
+        }
+
+        .section-title-line {
+            flex: 1;
+            height: 1px;
+            background: #E5E0D8;
+        }
+
+        .toggle-block {
+            border: 1px solid #E5E0D8;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .toggle-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 16px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .toggle-arrow {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            background: #F0EDE6;
+            border: 1px solid #E5E0D8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: #9A9390;
+            transition: all 0.15s;
+            flex-shrink: 0;
+        }
+
+        .toggle-arrow.open {
+            background: #FBF0EB;
+            border-color: #D4622A;
+            color: #D4622A;
+            transform: rotate(90deg);
+        }
+
+        .toggle-icon {
+            font-size: 17px;
+        }
+
+        .toggle-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1A1714;
+        }
+
+        .toggle-subtitle {
+            margin-left: auto;
+            font-size: 12px;
+            color: #9A9390;
+        }
+
+        .toggle-content {
+            padding: 0 16px 16px 48px;
+            border-top: 1px solid #E5E0D8;
+            display: none;
+        }
+
+        .toggle-content.open {
+            display: block;
+        }
+
+        .toggle-body {
+            padding-top: 14px;
+        }
+
+        .tag {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .tag-orange {
+            background: #FBF0EB;
+            color: #D4622A;
+        }
+
+        .tag-blue {
+            background: #EBF0FB;
+            color: #2A5EB4;
+        }
+
+        .tag-green {
+            background: #EBFAF2;
+            color: #2E7D55;
+        }
+
+        .tag-gray {
+            background: #F0EDE6;
+            color: #5A5350;
+        }
+
+        .notice {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+
+        .notice-icon {
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .notice-warn {
+            background: #FFF4E6;
+            border: 1px solid #F4C07A;
+            color: #B45A00;
+        }
+
+        .notice-info {
+            background: #EBF0FB;
+            border: 1px solid #A8BFED;
+            color: #2A5EB4;
+        }
+
+        .notice-danger {
+            background: #FDF0F0;
+            border: 1px solid #F4AAAA;
+            color: #C0392B;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 14px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #E5E0D8;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        thead th {
+            background: #F0EDE6;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #9A9390;
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid #E5E0D8;
+        }
+
+        tbody td {
+            padding: 11px 14px;
+            color: #5A5350;
+            vertical-align: top;
+            line-height: 1.55;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #E5E0D8;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 12px;
+            background: #fff;
+            border: 1px solid #E5E0D8;
+            border-radius: 8px;
+            padding: 13px 14px;
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            background: #1A1714;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+        }
+
+        .step-title {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #1A1714;
+            margin-bottom: 3px;
+        }
+
+        .step-desc {
+            font-size: 13px;
+            color: #9A9390;
+            line-height: 1.55;
+        }
+
+        .checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: #5A5350;
+            line-height: 1.6;
+        }
+
+        .checkbox {
+            width: 17px;
+            height: 17px;
+            border-radius: 4px;
+            border: 1.5px solid #C8C0B4;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .checkbox.checked {
+            background: #2E7D55;
+            border-color: #2E7D55;
+            color: #fff;
+        }
+
+        .checklist-text {
+            transition: all 0.15s;
+        }
+
+        .checklist-text.checked {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .code-block {
+            background: #1A1714;
+            border-radius: 8px;
+            padding: 16px 18px;
+            margin: 12px 0;
+            position: relative;
+        }
+
+        .code-label {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 10px;
+            color: #5A5350;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-family: monospace;
+        }
+
+        .code-content {
+            font-family: monospace;
+            font-size: 12.5px;
+            color: #C8B9A8;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            display: block;
+        }
+
+        .hl {
+            background: #FBF0EB;
+            color: #D4622A;
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-size: 0.91em;
+            font-family: monospace;
+        }
+
+        .page-footer {
+            border-top: 1px solid #E5E0D8;
+            margin: 36px 52px 0;
+            padding: 18px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Home page specific styles */
+        .hero-card {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E5E0D8;
+        }
+
+        .hero-banner {
+            height: 140px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.05;
+            background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%);
+            background-size: 20px 20px;
+        }
+
+        .hero-quote {
+            position: absolute;
+            bottom: 16px;
+            left: 24px;
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 0.05em;
+        }
+
+        .hero-content {
+            padding: 24px 24px 20px;
+        }
+
+        .hero-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #D4622A;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .hero-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 300;
+            font-size: 24px;
+            letter-spacing: -0.03em;
+            color: #1A1714;
+            margin-bottom: 8px;
+        }
+
+        .hero-text {
+            font-size: 14px;
+            color: #5A5350;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border: 1px solid #E5E0D8;
+            border-radius: 8px;
+            padding: 14px 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-label {
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #9A9390;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-family: 'Fraunces', serif;
+            font-size: 28px;
+            color: #1A1714;
+            letter-spacing: -0.03em;
+        }
+
+        .quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            background: #fff;
+            border: 1px solid #E5E0D8;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .quick-link:hover {
+            border-color: #D4622A;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .quick-link-icon {
+            font-size: 20px;
+        }
+
+        .quick-link-content {
+            flex: 1;
+        }
+
+        .quick-link-title {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: #1A1714;
+        }
+
+        .quick-link-sub {
+            font-size: 12px;
+            color: #9A9390;
+        }
+
+        .quick-link-arrow {
+            color: #9A9390;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #E5E0D8;
+            border-radius: 12px;
+            padding: 18px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.15s;
+        }
+
+        .card:hover {
+            border-color: #D4622A;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #1A1714;
+            margin-bottom: 5px;
+        }
+
+        .card-desc {
+            font-size: 12.5px;
+            color: #9A9390;
+            line-height: 1.55;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar-container {
+            margin-bottom: 16px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .progress-name {
+            font-size: 13px;
+            color: #5A5350;
+            font-weight: 500;
+        }
+
+        .progress-pct {
+            font-size: 12px;
+            color: #9A9390;
+            font-family: monospace;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #F0EDE6;
+            border-radius: 3px;
+            overflow: hidden;
+            border: 1px solid #E5E0D8;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+
+        .prop-row {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin: 8px 0;
+        }
+
+        .prop-key {
+            font-size: 11px;
+            font-weight: 500;
+            color: #9A9390;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            width: 110px;
+            flex-shrink: 0;
+        }
+
+        .prop-value {
+            font-size: 14px;
+            color: #5A5350;
+        }
+
+        .divider {
+            height: 1px;
+            background: #E5E0D8;
+            margin: 14px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="topbar-logo">
+            <div class="topbar-logo-icon">CS</div>
+            <span class="topbar-logo-text">Support Wiki</span>
+        </div>
+        <div class="topbar-center">
+            <div class="breadcrumbs">
+                <span class="breadcrumb-link" onclick="app.navigate('home')">Home</span>
+                <span class="breadcrumb-separator">/</span>
+                <span id="current-page-breadcrumb">Home</span>
+            </div>
+            <div class="search-box">
+                <span style="color: #9A9390; font-size: 12px;">🔍</span>
+                <input type="text" id="search-input" placeholder="Search knowledge base…">
+            </div>
+        </div>
+        <div class="topbar-actions">
+            <button class="topbar-btn">↗</button>
+            <button class="topbar-btn">⋯</button>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar"></div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="main-content"></div>
+
+    <script>
+        // Application State
+        const app = {
+            currentPage: 'home',
+            openGroups: {},
+            checkedItems: {},
+
+            init() {
+                this.renderSidebar();
+                this.renderPage();
+                this.setupEventListeners();
+            },
+
+            setupEventListeners() {
+                document.getElementById('search-input').addEventListener('input', (e) => {
+                    this.handleSearch(e.target.value);
+                });
+            },
+
+            navigate(page) {
+                this.currentPage = page;
+                
+                // Auto-expand parent groups
+                if (['brand-overview', 'brand-voice', 'brand-standards'].includes(page)) {
+                    this.openGroups.brands = true;
+                }
+                if (['tools-overview', 'crm', 'ticketing', 'comms'].includes(page)) {
+                    this.openGroups.tools = true;
+                }
+
+                this.renderSidebar();
+                this.renderPage();
+                this.updateBreadcrumb();
+                window.scrollTo(0, 0);
+            },
+
+            toggleGroup(id) {
+                this.openGroups[id] = !this.openGroups[id];
+                this.renderSidebar();
+            },
+
+            updateBreadcrumb() {
+                const breadcrumbs = {
+                    'home': 'Home',
+                    'training': 'Training Objective',
+                    'brand-overview': 'Brand Overview',
+                    'brand-voice': 'Brand Voice & Tone',
+                    'brand-standards': 'Standards & Guidelines',
+                    'tools-overview': 'Tools Overview',
+                    'crm': 'CRM System',
+                    'ticketing': 'Ticketing & Helpdesk',
+                    'comms': 'Communication Tools',
+                    'workflows': 'Workflows',
+                    'escalation': 'Escalation Protocol',
+                    'remote': 'Remote Work',
+                    'glossary': 'Glossary',
+                    'faq': 'FAQ',
+                    'changelog': 'Change Log'
+                };
+                document.getElementById('current-page-breadcrumb').textContent = breadcrumbs[this.currentPage] || this.currentPage;
+            },
+
+            handleSearch(value) {
+                if (!value.trim()) return;
+                
+                const searchMap = {
+                    'training': ['training', 'objective', 'competency'],
+                    'brand-overview': ['brand', 'product', 'policy', 'return'],
+                    'brand-voice': ['voice', 'tone', 'template', 'response'],
+                    'tools-overview': ['tool', 'system', 'access', 'software'],
+                    'crm': ['crm', 'hubspot', 'salesforce', 'customer data'],
+                    'ticketing': ['ticket', 'zendesk', 'freshdesk', 'helpdesk'],
+                    'comms': ['slack', 'zoom', 'loom', 'communication'],
+                    'workflows': ['workflow', 'process', 'refund', 'shipping', 'order'],
+                    'escalation': ['escalate', 'legal', 'media', 'fraud', 'angry', 'hostile'],
+                    'remote': ['remote', 'work from home', 'setup', 'standup', 'internet'],
+                    'glossary': ['glossary', 'term', 'definition'],
+                    'faq': ['faq', 'question', 'first week', 'internet'],
+                    'changelog': ['change', 'log', 'update', 'version']
+                };
+
+                const query = value.toLowerCase();
+                for (const [page, keywords] of Object.entries(searchMap)) {
+                    if (keywords.some(k => query.includes(k))) {
+                        this.navigate(page);
+                        break;
+                    }
+                }
+            },
+
+            renderSidebar() {
+                const nav = [
+                    { id: 'home', icon: '🏠', label: 'Home' },
+                    { id: 'training', icon: '🎯', label: 'Training Objective', children: [] },
+                    {
+                        id: 'brands',
+                        icon: '🏷️',
+                        label: 'Brands',
+                        children: [
+                            { id: 'brand-overview', label: 'Brand Overview' },
+                            { id: 'brand-voice', label: 'Brand Voice & Tone' },
+                            { id: 'brand-standards', label: 'Standards & Guidelines' }
+                        ]
+                    },
+                    {
+                        id: 'tools',
+                        icon: '🛠️',
+                        label: 'Tools & Systems',
+                        children: [
+                            { id: 'tools-overview', label: 'Tools Overview' },
+                            { id: 'crm', label: 'CRM System' },
+                            { id: 'ticketing', label: 'Ticketing & Helpdesk' },
+                            { id: 'comms', label: 'Communication Tools' }
+                        ]
+                    },
+                    { id: 'workflows', icon: '🔄', label: 'Workflows' },
+                    { id: 'escalation', icon: '🚨', label: 'Escalation', badge: 'Key' },
+                    { id: 'remote', icon: '🌐', label: 'Remote Work' },
+                    null,
+                    { id: 'glossary', icon: '📖', label: 'Glossary' },
+                    { id: 'faq', icon: '❓', label: 'FAQ' },
+                    { id: 'changelog', icon: '📋', label: 'Change Log' }
+                ];
+
+                const sidebar = document.getElementById('sidebar');
+                sidebar.innerHTML = '';
+
+                nav.forEach(item => {
+                    if (!item) {
+                        sidebar.innerHTML += '<div class="nav-separator"></div>';
+                        return;
+                    }
+
+                    const isActive = this.currentPage === item.id || (item.children && item.children.some(c => c.id === this.currentPage));
+                    const isGroup = item.children && item.children.length > 0;
+                    const isOpen = this.openGroups[item.id];
+
+                    const navItem = document.createElement('div');
+                    
+                    const itemHtml = `
+                        <div class="nav-item ${isActive && !isGroup ? 'active' : ''}" onclick="app.${isGroup ? `toggleGroup('${item.id}')` : `navigate('${item.id}')`}">
+                            <span class="nav-item-icon">${item.icon}</span>
+                            <span class="nav-item-label">${item.label}</span>
+                            ${item.badge ? `<span class="nav-item-badge">${item.badge}</span>` : ''}
+                            ${isGroup ? `<span class="nav-item-arrow ${isOpen ? 'open' : ''}">▶</span>` : ''}
+                        </div>
+                    `;
+
+                    navItem.innerHTML = itemHtml;
+
+                    if (isGroup && isOpen) {
+                        const children = document.createElement('div');
+                        children.className = 'nav-children open';
+                        item.children.forEach(child => {
+                            const childDiv = document.createElement('div');
+                            childDiv.className = `nav-child ${this.currentPage === child.id ? 'active' : ''}`;
+                            childDiv.onclick = () => this.navigate(child.id);
+                            childDiv.innerHTML = `<span style="font-size: 11px; color: #9A9390;">•</span> ${child.label}`;
+                            children.appendChild(childDiv);
+                        });
+                        navItem.appendChild(children);
+                    }
+
+                    sidebar.appendChild(navItem);
+                });
+            },
+
+            renderPage() {
+                const content = document.getElementById('main-content');
+                content.innerHTML = '';
+                content.className = 'main-content fade-in';
+
+                switch (this.currentPage) {
+                    case 'home':
+                        content.innerHTML = this.renderHomePage();
+                        break;
+                    case 'training':
+                        content.innerHTML = this.renderTrainingPage();
+                        break;
+                    case 'brand-overview':
+                        content.innerHTML = this.renderBrandOverviewPage();
+                        break;
+                    case 'brand-voice':
+                        content.innerHTML = this.renderBrandVoicePage();
+                        break;
+                    case 'tools-overview':
+                        content.innerHTML = this.renderToolsOverviewPage();
+                        break;
+                    case 'workflows':
+                        content.innerHTML = this.renderWorkflowsPage();
+                        break;
+                    case 'escalation':
+                        content.innerHTML = this.renderEscalationPage();
+                        break;
+                    case 'remote':
+                        content.innerHTML = this.renderRemotePage();
+                        break;
+                    case 'glossary':
+                        content.innerHTML = this.renderGlossaryPage();
+                        break;
+                    case 'faq':
+                        content.innerHTML = this.renderFAQPage();
+                        break;
+                    case 'changelog':
+                        content.innerHTML = this.renderChangeLogPage();
+                        break;
+                    case 'crm':
+                        content.innerHTML = this.renderCRMPage();
+                        break;
+                    case 'ticketing':
+                        content.innerHTML = this.renderTicketingPage();
+                        break;
+                    case 'comms':
+                        content.innerHTML = this.renderCommsPage();
+                        break;
+                    case 'brand-standards':
+                        content.innerHTML = this.renderBrandStandardsPage();
+                        break;
+                    default:
+                        content.innerHTML = this.renderHomePage();
+                }
+
+                // Setup interactive elements after rendering
+                this.setupPageInteractions();
+            },
+
+            setupPageInteractions() {
+                // Toggle blocks
+                document.querySelectorAll('.toggle-header').forEach(header => {
+                    header.addEventListener('click', () => {
+                        const block = header.parentElement;
+                        const arrow = header.querySelector('.toggle-arrow');
+                        const content = block.querySelector('.toggle-content');
+                        
+                        arrow.classList.toggle('open');
+                        content.classList.toggle('open');
+                    });
+                });
+
+                // Checkboxes
+                document.querySelectorAll('.checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('click', () => {
+                        checkbox.classList.toggle('checked');
+                        const text = checkbox.nextElementSibling;
+                        text.classList.toggle('checked');
+                        
+                        if (checkbox.classList.contains('checked')) {
+                            checkbox.textContent = '✓';
+                        } else {
+                            checkbox.textContent = '';
+                        }
+                    });
+                });
+            },
+
+            // Helper functions for rendering components
+            renderCover(color, emoji = '') {
+                const gradients = {
+                    'orange': 'linear-gradient(135deg,#D4622A,#E8833A,#F5A55A)',
+                    'blue': 'linear-gradient(135deg,#1E3A6E,#2A5EB4,#5B91E5)',
+                    'green': 'linear-gradient(135deg,#1B4D35,#2E7D55,#5BBF8A)',
+                    'amber': 'linear-gradient(135deg,#7A3B00,#B45A00,#E88C2A)',
+                    'neutral': 'linear-gradient(135deg,#2A2420,#5A4A44,#9A8880)',
+                    'red': 'linear-gradient(135deg,#7A0000,#C0392B,#E74C3C)',
+                    'dark': 'linear-gradient(120deg,#1A1714,#3A2A24,#D4622A)',
+                    'navy': 'linear-gradient(135deg,#1A2A4A,#2A4A8A,#4A7ACA)',
+                    'forest': 'linear-gradient(135deg,#1A3A2A,#2A6A4A,#4AAA7A)',
+                    'charcoal': 'linear-gradient(135deg,#1A1714,#3A3430,#6A5A50)'
+                };
+
+                return `
+                    <div class="cover">
+                        <div class="cover-gradient" style="background: ${gradients[color] || gradients.orange}"></div>
+                        <div class="cover-pattern"></div>
+                        ${emoji ? `<div class="cover-emoji">${emoji}</div>` : ''}
+                    </div>
+                `;
+            },
+
+            renderPageHeader(tag, title, chips = [], tagColor = '#D4622A', tagBg = '#FBF0EB') {
+                return `
+                    <div class="page-header">
+                        ${tag ? `<div class="page-tag" style="color: ${tagColor}; background: ${tagBg};">${tag}</div>` : ''}
+                        <h1 class="page-title">${title}</h1>
+                        ${chips.length > 0 ? `
+                            <div class="page-chips">
+                                ${chips.map(c => `
+                                    <div class="chip ${c.live ? 'live' : ''}">
+                                        ${c.live ? '<span class="chip-dot"></span>' : ''}
+                                        ${c.label}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            },
+
+            renderCallout(icon, content, color = '#D4622A', bg = '#FBF0EB') {
+                return `
+                    <div class="callout" style="background: ${bg}; border: 1px solid ${color}30; border-left-color: ${color};">
+                        <span class="callout-icon">${icon}</span>
+                        <div class="callout-content">${content}</div>
+                    </div>
+                `;
+            },
+
+            renderSectionTitle(title) {
+                return `
+                    <div class="section-title">
+                        <h2>${title}</h2>
+                        <div class="section-title-line"></div>
+                    </div>
+                `;
+            },
+
+            renderToggleBlock(icon, title, subtitle, content, defaultOpen = false) {
+                return `
+                    <div class="toggle-block">
+                        <div class="toggle-header">
+                            <div class="toggle-arrow ${defaultOpen ? 'open' : ''}">▶</div>
+                            <span class="toggle-icon">${icon}</span>
+                            <span class="toggle-title">${title}</span>
+                            ${subtitle ? `<span class="toggle-subtitle">${subtitle}</span>` : ''}
+                        </div>
+                        <div class="toggle-content ${defaultOpen ? 'open' : ''}">
+                            <div class="toggle-body">${content}</div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderPageFooter(prevPage, nextPage, prevLabel, nextLabel) {
+                return `
+                    <div class="page-footer">
+                        ${prevPage ? `<button class="btn btn-secondary" onclick="app.navigate('${prevPage}')">← ${prevLabel}</button>` : '<div></div>'}
+                        ${nextPage ? `<button class="btn btn-primary" onclick="app.navigate('${nextPage}')">${nextLabel} →</button>` : ''}
+                    </div>
+                `;
+            },
+
+            // Page renderers
+            renderHomePage() {
+                return `
+                    ${this.renderCover('dark')}
+                    ${this.renderPageHeader('📚 Knowledge Base', 'Customer Support\nTraining Hub', [
+                        { label: 'Live Document', live: true },
+                        { label: '📅 Updated 2025' },
+                        { label: '👥 All CS Team' },
+                        { label: '🌐 Remote Startup' }
+                    ])}
+                    <div class="page-body">
+                        <div class="hero-card">
+                            <div class="hero-banner" style="background: linear-gradient(120deg,#1A1714,#3A2A24,#D4622A);">
+                                <div class="hero-pattern"></div>
+                                <div class="hero-quote">— accuracy · documentation · escalation discipline</div>
+                            </div>
+                            <div class="hero-content">
+                                <div class="hero-tag">Welcome Note</div>
+                                <h2 class="hero-title">Your complete training reference</h2>
+                                <p class="hero-text">This knowledge base is your single source of truth for navigating all systems, representing our brands correctly, following internal workflows, and thriving as a remote CS professional.</p>
+                                <div class="hero-buttons">
+                                    <button class="btn btn-primary btn-large" onclick="app.navigate('training')">▶ Start Training</button>
+                                    <button class="btn btn-secondary btn-large" onclick="app.navigate('workflows')">View Workflows</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-label">Training Modules</div>
+                                <div class="stat-value">8</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Tools to Master</div>
+                                <div class="stat-value">6+</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Brands</div>
+                                <div class="stat-value">3</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Remote</div>
+                                <div class="stat-value">100%</div>
+                            </div>
+                        </div>
+
+                        ${this.renderSectionTitle('Quick Access')}
+
+                        <div class="quick-links">
+                            ${[
+                                { icon: '🎯', title: 'Training Objective', sub: '5 core competencies every CS member must master', page: 'training' },
+                                { icon: '🛠️', title: 'Tools & Systems', sub: 'All platforms, access, and usage guidelines', page: 'tools-overview' },
+                                { icon: '🚨', title: 'Escalation Protocol', sub: 'Critical — know when and how to escalate', page: 'escalation' },
+                                { icon: '🔄', title: 'Internal Workflows', sub: 'Step-by-step processes for every scenario', page: 'workflows' }
+                            ].map(l => `
+                                <div class="quick-link" onclick="app.navigate('${l.page}')">
+                                    <span class="quick-link-icon">${l.icon}</span>
+                                    <div class="quick-link-content">
+                                        <div class="quick-link-title">${l.title}</div>
+                                        <div class="quick-link-sub">${l.sub}</div>
+                                    </div>
+                                    <span class="quick-link-arrow">→</span>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div style="border-top: 1px solid #E5E0D8; margin-top: 40px; padding-top: 16px; display: flex; justify-content: space-between; font-size: 12px; color: #9A9390;">
+                            <span>Customer Support Training · Remote Startup</span>
+                            <span>Maintained by Team Lead</span>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderTrainingPage() {
+                return `
+                    ${this.renderCover('blue', '🎯')}
+                    ${this.renderPageHeader('Training Module 1', 'Training Objective', [
+                        { label: 'Required', live: true },
+                        { label: '📍 Start Here' },
+                        { label: '⏱ ~15 min read' }
+                    ], '#2A5EB4', '#EBF0FB')}
+                    <div class="page-body">
+                        ${this.renderCallout('ℹ️', '<strong>Training Goal:</strong> Ensure every Customer Support team member can navigate all required systems confidently, provide accurate information, follow correct workflows, escalate appropriately, and work independently in a remote environment.', '#2A5EB4', '#EBF0FB')}
+                        
+                        ${this.renderSectionTitle('Core Competencies')}
+                        
+                        <div class="card-grid">
+                            ${[
+                                ['🖥️', 'Navigate Systems', 'Master all required tools and platforms used daily.', 'Tools', 'tools-overview'],
+                                ['✅', 'Provide Accurate Info', 'Know brand details to give correct answers every time.', 'Brands', 'brand-overview'],
+                                ['📋', 'Follow Workflows', 'Consistent processes protect quality and reduce errors.', 'Workflows', 'workflows'],
+                                ['🚨', 'Escalate Properly', 'Know when, how, and to whom to escalate issues.', 'Critical', 'escalation'],
+                                ['🌐', 'Work Independently', 'Thrive in a fully distributed remote environment.', 'Remote', 'remote']
+                            ].map(([icon, title, desc, tag, page]) => `
+                                <div class="card" onclick="app.navigate('${page}')">
+                                    <div class="card-icon">${icon}</div>
+                                    <div class="card-title">${title}</div>
+                                    <div class="card-desc">${desc}</div>
+                                    <span class="tag tag-orange">${tag}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        ${this.renderSectionTitle('Mandatory Standards')}
+                        
+                        ${this.renderToggleBlock('🎯', 'Accuracy in Every Interaction', 'Non-negotiable', `
+                            <p style="font-size: 14px; color: #5A5350; line-height: 1.7; margin-bottom: 12px;">Never guess or speculate. If you don't know the answer, commit to finding correct information before responding. Wrong information permanently damages brand trust.</p>
+                            <ul class="checklist">
+                                <li class="checklist-item">
+                                    <div class="checkbox checked">✓</div>
+                                    <span class="checklist-text checked">Verify facts in the knowledge base before responding</span>
+                                </li>
+                                <li class="checklist-item">
+                                    <div class="checkbox checked">✓</div>
+                                    <span class="checklist-text checked">Use exact product names, pricing, and policy language</span>
+                                </li>
+                                <li class="checklist-item">
+                                    <div class="checkbox checked">✓</div>
+                                    <span class="checklist-text checked">Never make promises outside your authority level</span>
+                                </li>
+                                <li class="checklist-item">
+                                    <div class="checkbox"></div>
+                                    <span class="checklist-text">Review response carefully before sending</span>
+                                </li>
+                            </ul>
+                        `, true)}
+
+                        ${this.renderToggleBlock('📝', 'Documentation Discipline', 'Non-negotiable', `
+                            <p style="font-size: 14px; color: #5A5350; line-height: 1.7; margin-bottom: 12px;">Every interaction must be documented accurately and promptly. Documentation enables seamless handoffs and protects both the customer and company.</p>
+                            <div class="step-list">
+                                <div class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div>
+                                        <div class="step-title">Log every contact</div>
+                                        <div class="step-desc">Record customer name, issue, channel, and timestamp in the CRM.</div>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number">2</div>
+                                    <div>
+                                        <div class="step-title">Note outcome and next steps</div>
+                                        <div class="step-desc">Clearly state what was resolved and what remains pending.</div>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number">3</div>
+                                    <div>
+                                        <div class="step-title">Tag and categorize correctly</div>
+                                        <div class="step-desc">Use correct tags for accurate team-wide reporting.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `)}
+
+                        ${this.renderToggleBlock('⚖️', 'Escalation Discipline', 'Protects Operational Integrity', `
+                            <p style="font-size: 14px; color: #5A5350; line-height: 1.7; margin-bottom: 8px;">Knowing when NOT to handle something yourself is as critical as knowing what to do. Improper handling can create legal, financial, or reputational risk.</p>
+                            <div class="notice notice-warn">
+                                <span class="notice-icon">⚠️</span>
+                                <div>Always escalate refund requests above the approved threshold, legal threats, media inquiries, account fraud, or anything requiring access beyond your role. See <strong>Escalation Protocol</strong> for full details.</div>
+                            </div>
+                        `)}
+
+                        ${this.renderPageFooter(null, 'brand-overview', '', 'Brands')}
+                    </div>
+                `;
+            },
+
+            renderBrandOverviewPage() {
+                return `
+                    ${this.renderCover('amber', '🏷️')}
+                    ${this.renderPageHeader('Brands · Module 2', 'Brand Overview', [
+                        { label: 'Active', live: true },
+                        { label: '📅 Brand Training' }
+                    ], '#B45A00', '#FFF4E6')}
+                    <div class="page-body">
+                        ${this.renderCallout('⚠️', '<strong>Brand Representation:</strong> You are the voice of the company in every interaction. Accuracy, tone, and consistency are mandatory across all brands you support.', '#B45A00', '#FFF4E6')}
+                        
+                        ${this.renderSectionTitle('Brands We Support')}
+                        
+                        ${this.renderToggleBlock('🏷️', 'Brand A — Primary Brand', 'Main Product Line · B2C', `
+                            <div class="prop-row"><div class="prop-key">Segment</div><div class="prop-value">B2C · Consumer</div></div>
+                            <div class="prop-row"><div class="prop-key">Tone</div><div class="prop-value">Friendly, approachable, solution-focused</div></div>
+                            <div class="prop-row"><div class="prop-key">Channels</div><div class="prop-value">Email, Live Chat, Social DMs</div></div>
+                            <div class="prop-row"><div class="prop-key">SLA</div><div class="prop-value">Reply within 4 hours (business hours)</div></div>
+                            <div class="divider"></div>
+                            <ul class="checklist">
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">30-day return policy from purchase date</span></li>
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Exchange available up to 60 days</span></li>
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Refunds processed within 5–7 business days</span></li>
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Warranty: 12 months on all hardware</span></li>
+                            </ul>
+                        `, true)}
+
+                        ${this.renderToggleBlock('🏢', 'Brand B — Enterprise', 'B2B · Corporate Clients', `
+                            <div class="prop-row"><div class="prop-key">Segment</div><div class="prop-value">B2B · Enterprise</div></div>
+                            <div class="prop-row"><div class="prop-key">Tone</div><div class="prop-value">Professional, precise, formal</div></div>
+                            <div class="prop-row"><div class="prop-key">Channels</div><div class="prop-value">Email, Dedicated Account Manager, Phone</div></div>
+                            <div class="prop-row"><div class="prop-key">SLA</div><div class="prop-value">Reply within 2 hours (24/7)</div></div>
+                            <div class="notice notice-info">
+                                <span class="notice-icon">ℹ️</span>
+                                <div>Enterprise clients have dedicated account managers. Do NOT make binding commitments — always CC the account manager on sensitive cases.</div>
+                            </div>
+                        `)}
+
+                        ${this.renderToggleBlock('✨', 'Brand C — Premium', 'Luxury · White-Glove Experience', `
+                            <div class="prop-row"><div class="prop-key">Segment</div><div class="prop-value">B2C · Premium</div></div>
+                            <div class="prop-row"><div class="prop-key">Tone</div><div class="prop-value">Luxury, warm, white-glove service</div></div>
+                            <div class="prop-row"><div class="prop-key">Channels</div><div class="prop-value">Phone, Email, VIP Chat</div></div>
+                            <div class="prop-row"><div class="prop-key">SLA</div><div class="prop-value">Reply within 1 hour</div></div>
+                            <div class="notice notice-warn">
+                                <span class="notice-icon">⚠️</span>
+                                <div>Premium customers expect concierge-level service. Never use templated responses. Every interaction must feel personal and bespoke.</div>
+                            </div>
+                        `)}
+
+                        ${this.renderSectionTitle('Brand Comparison')}
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Brand</th>
+                                        <th>Audience</th>
+                                        <th>Tone</th>
+                                        <th>SLA</th>
+                                        <th>Primary Channel</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Brand A</td>
+                                        <td>Consumers</td>
+                                        <td><span class="tag tag-orange">Friendly</span></td>
+                                        <td>4 hrs</td>
+                                        <td>Chat / Email</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Brand B</td>
+                                        <td>Enterprise</td>
+                                        <td><span class="tag tag-blue">Formal</span></td>
+                                        <td>2 hrs</td>
+                                        <td>Email / Phone</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Brand C</td>
+                                        <td>Premium</td>
+                                        <td><span class="tag tag-gray">Luxury</span></td>
+                                        <td>1 hr</td>
+                                        <td>Phone / VIP</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        ${this.renderPageFooter('training', 'brand-voice', 'Training', 'Brand Voice')}
+                    </div>
+                `;
+            },
+
+            renderBrandVoicePage() {
+                return `
+                    ${this.renderCover('amber', '🗣️')}
+                    ${this.renderPageHeader('Brands · Module 2b', 'Brand Voice & Tone', [
+                        { label: '✏️ Communication Standards' }
+                    ], '#B45A00', '#FFF4E6')}
+                    <div class="page-body">
+                        ${this.renderSectionTitle('Do\'s & Don\'ts')}
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>✅ Do</th>
+                                        <th>❌ Don't</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Use the customer's name at least once</td>
+                                        <td>Start every message with 'I' or 'We'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Acknowledge the issue before solving it</td>
+                                        <td>Jump to a solution without empathy</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Confirm understanding before proceeding</td>
+                                        <td>Assume you know what they mean</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Set clear expectations with specific timeframes</td>
+                                        <td>Say 'ASAP' without a concrete date</td>
+                                    </tr>
+                                    <tr>
+                                        <td>End with an open offer to help further</td>
+                                        <td>End abruptly without a closing line</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        ${this.renderSectionTitle('Response Templates')}
+                        
+                        ${this.renderToggleBlock('📧', 'Opening a Ticket Response', '', `
+                            <div class="code-block">
+                                <span class="code-label">Template</span>
+                                <code class="code-content">Hi [Name],
+
+Thanks for reaching out — I'm sorry to hear you're experiencing [brief issue summary]. I completely understand how frustrating that can be, and I'm here to help get this sorted for you.
+
+Let me look into this now…</code>
+                            </div>
+                        `)}
+
+                        ${this.renderToggleBlock('✅', 'Closing a Resolved Ticket', '', `
+                            <div class="code-block">
+                                <span class="code-label">Template</span>
+                                <code class="code-content">Hi [Name],
+
+Great news — [resolution summary]. This should now be [fully resolved / on its way / reflected in your account].
+
+If you have any other questions, please don't hesitate to reach out!
+
+Best,
+[Your Name]</code>
+                            </div>
+                        `)}
+
+                        ${this.renderToggleBlock('⏳', 'Acknowledging a Delay', '', `
+                            <div class="code-block">
+                                <span class="code-label">Template</span>
+                                <code class="code-content">Hi [Name],
+
+Thank you for your patience — I wanted to let you know we're still working on [issue] and expect an update by [specific date/time].
+
+I'll follow up as soon as I have more information.
+
+Best,
+[Your Name]</code>
+                            </div>
+                        `)}
+
+                        ${this.renderPageFooter('brand-overview', 'tools-overview', 'Brand Overview', 'Tools')}
+                    </div>
+                `;
+            },
+
+            renderToolsOverviewPage() {
+                return `
+                    ${this.renderCover('neutral', '🛠️')}
+                    ${this.renderPageHeader('Tools & Systems · Module 3', 'Tools Overview', [
+                        { label: 'Required', live: true },
+                        { label: '⏱ Day 1 Access' }
+                    ])}
+                    <div class="page-body">
+                        ${this.renderCallout('🔑', '<strong>Access:</strong> All tool access will be provisioned by IT on or before your start date. Missing access after 48 hours? Contact <span class="hl">it@company.com</span> and CC your Team Lead immediately.')}
+                        
+                        ${this.renderSectionTitle('All Systems at a Glance')}
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tool</th>
+                                        <th>Purpose</th>
+                                        <th>Category</th>
+                                        <th>Access</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>HubSpot / Salesforce</td>
+                                        <td>Customer relationship management</td>
+                                        <td><span class="tag tag-orange">CRM</span></td>
+                                        <td><span class="tag tag-green">Day 1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Zendesk / Freshdesk</td>
+                                        <td>Ticket management & helpdesk</td>
+                                        <td><span class="tag tag-blue">Ticketing</span></td>
+                                        <td><span class="tag tag-green">Day 1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Slack</td>
+                                        <td>Internal team communication</td>
+                                        <td><span class="tag tag-gray">Comms</span></td>
+                                        <td><span class="tag tag-green">Day 1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Notion</td>
+                                        <td>Knowledge base & documentation</td>
+                                        <td><span class="tag tag-gray">Wiki</span></td>
+                                        <td><span class="tag tag-green">Day 1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Loom / Zoom</td>
+                                        <td>Video communication & meetings</td>
+                                        <td><span class="tag tag-gray">Video</span></td>
+                                        <td><span class="tag tag-green">Day 1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shopify / Order Portal</td>
+                                        <td>Order management & lookup</td>
+                                        <td><span class="tag tag-orange">Orders</span></td>
+                                        <td><span class="tag tag-gray">Week 1</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        ${this.renderSectionTitle('Training Completion Tracker')}
+                        
+                        ${[
+                            ['CRM (HubSpot/Salesforce)', '100%', '#D4622A'],
+                            ['Ticketing System (Zendesk)', '100%', '#2A5EB4'],
+                            ['Communication Tools', '80%', '#2E7D55'],
+                            ['Order Management Portal', '40%', '#B45A00']
+                        ].map(([name, pct, color]) => `
+                            <div class="progress-bar-container">
+                                <div class="progress-label">
+                                    <span class="progress-name">${name}</span>
+                                    <span class="progress-pct">${pct}</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${pct}; background: ${color};"></div>
+                                </div>
+                            </div>
+                        `).join('')}
+
+                        ${this.renderPageFooter('brand-voice', 'workflows', 'Brands', 'Workflows')}
+                    </div>
+                `;
+            },
+
+            renderWorkflowsPage() {
+                return `
+                    ${this.renderCover('green', '🔄')}
+                    ${this.renderPageHeader('Workflows · Module 4', 'Internal Workflows', [
+                        { label: 'Required', live: true },
+                        { label: '📋 Process Guide' }
+                    ], '#2E7D55', '#EBFAF2')}
+                    <div class="page-body">
+                        <p style="font-size: 14.5px; color: #5A5350; line-height: 1.75; margin-bottom: 24px;">Following consistent workflows allows a remote team to operate as a single cohesive unit. Deviation from any defined workflow must be documented and approved by a Team Lead.</p>
+                        
+                        ${this.renderSectionTitle('Core Workflows')}
+                        
+                        ${this.renderToggleBlock('📥', 'Inbound Ticket Handling', 'Standard Process', `
+                            <div class="step-list">
+                                <div class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div>
+                                        <div class="step-title">Receive & Assign</div>
+                                        <div class="step-desc">Tickets auto-assign via Zendesk. Confirm assignment and check the SLA timer immediately.</div>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number">2</div>
+                                    <div>
+                                        <div class="step-title">Triage & Categorize</div>
+                                        <div class="step-desc">Tag the ticket: billing / shipping / product / account / other.</div>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number">3</div>
+                                    <div>
+                                        <div class="step-title">Research & Respond</div>
+                                        <div class="step-desc">Verify the answer in the knowledge base or CRM before replying. Never guess.</div>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number">4</div>
+                                    <div>
+                                        <div class="step-title">Document & Close</div>
+                                        <div class="step-desc">Add internal notes with resolution summary. Close only when fully resolved and confirmed.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `, true)}
+
+                        ${this.renderToggleBlock('💰', 'Refund Request Workflow', 'Finance-sensitive', `
+                            <div class="notice notice-warn">
+                                <span class="notice-icon">⚠️</span>
+                                <div>Refunds above the approved threshold require Team Lead approval before processing. Never promise refunds above this amount.</div>
+                            </div>
+                            <div class="step-list">
+                                <div class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div>
+                                        <div class="step-title">Verify Eligibility</div>
+                                        <div class="step-desc">Check order date, purchase type, and return policy in the CRM first.</div>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number" style="background: #B45A00;">2</div>
+                                    <div>
+                                        <div class="step-title">Check Amount Threshold</div>
+                                        <div class="step-desc">Under threshold: process directly. Over threshold: escalate to Team Lead before any commitment.</div>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number">3</div>
+                                    <div>
+                                        <div class="step-title">Process & Notify</div>
+                                        <div class="step-desc">Submit through the order portal. Confirm timeline with customer: 5–7 business days.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `)}
+
+                        ${this.renderToggleBlock('📦', 'Shipping & Order Issues', 'Lost, Delayed, or Incorrect', `
+                            <ul class="checklist">
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Pull tracking info from the shipping portal first</span></li>
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Verify last scan location and expected delivery date</span></li>
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">If 3+ days past expected delivery, initiate an investigation</span></li>
+                                <li class="checklist-item"><div class="checkbox"></div><span class="checklist-text">Update customer with tracking status and resolution timeline</span></li>
+                                <li class="checklist-item"><div class="checkbox"></div><span class="checklist-text">Follow up proactively if unresolved after 48 hours</span></li>
+                            </ul>
+                        `)}
+
+                        ${this.renderToggleBlock('🔑', 'Account Access Issues', 'Passwords, Logins, Verification', `
+                            <div class="step-list">
+                                <div class="step-item">
+                                    <div class="step-number">1</div>
+                                    <div>
+                                        <div class="step-title">Verify customer identity</div>
+                                        <div class="step-desc">Use two verification points (email + order number, or email + billing address) before any account action.</div>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number">2</div>
+                                    <div>
+                                        <div class="step-title">Process standard resets</div>
+                                        <div class="step-desc">Trigger password reset through the admin portal for verified customers only.</div>
+                                    </div>
+                                </div>
+                                <div class="step-item">
+                                    <div class="step-number" style="background: #C0392B;">3</div>
+                                    <div>
+                                        <div class="step-title">Escalate suspected fraud</div>
+                                        <div class="step-desc">If suspicious or identity cannot be verified, escalate immediately — do NOT proceed.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `)}
+
+                        ${this.renderPageFooter('tools-overview', 'escalation', 'Tools', 'Escalation')}
+                    </div>
+                `;
+            },
+
+            renderEscalationPage() {
+                return `
+                    ${this.renderCover('red', '🚨')}
+                    ${this.renderPageHeader('Critical · Module 5', 'Escalation Protocol', [
+                        { label: 'Mandatory', live: true },
+                        { label: '🚨 High Priority' }
+                    ], '#C0392B', '#FDF0F0')}
+                    <div class="page-body">
+                        ${this.renderCallout('🚨', '<strong>Non-negotiable:</strong> Escalation discipline protects operational integrity. Handling issues outside your authority — even with good intentions — can create serious legal, financial, and reputational consequences.', '#C0392B', '#FDF0F0')}
+                        
+                        ${this.renderSectionTitle('Always Escalate These')}
+                        
+                        <div class="card-grid" style="grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));">
+                            ${[
+                                ['⚖️', 'Legal Threats', 'Any mention of lawsuits, legal action, attorneys, or regulatory complaints.'],
+                                ['📰', 'Media Inquiries', 'Press, journalists, influencers, or anyone referencing public coverage.'],
+                                ['🔓', 'Account Fraud', 'Unauthorized access, identity concerns, or data breach suspicions.'],
+                                ['💸', 'Large Refunds', 'Requests exceeding your pre-approved refund authority threshold.'],
+                                ['😡', 'Hostile Customers', 'When de-escalation has failed and the customer remains aggressive or abusive.']
+                            ].map(([icon, title, desc]) => `
+                                <div class="card" style="cursor: default; border-color: #F4AAAA;">
+                                    <div class="card-icon">${icon}</div>
+                                    <div class="card-title">${title}</div>
+                                    <div class="card-desc">${desc}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        ${this.renderSectionTitle('Escalation Steps')}
+                        
+                        <div class="step-list">
+                            ${[
+                                ['Post in #escalations on Slack', 'Include: customer name, ticket ID, brand, issue summary, and why it needs escalation. Be concise and factual.'],
+                                ['Inform the customer', 'Tell them their issue has been escalated and they will hear back within [SLA]. Do NOT share internal process details.'],
+                                ['Tag the ticket as \'Escalated\'', 'Apply the escalation tag in Zendesk and reassign to the Team Lead queue immediately.'],
+                                ['Do not re-engage independently', 'Once escalated, do not continue the conversation unless the Team Lead explicitly instructs you to assist.']
+                            ].map(([title, desc], i) => `
+                                <div class="step-item">
+                                    <div class="step-number" style="background: #C0392B;">${i + 1}</div>
+                                    <div>
+                                        <div class="step-title">${title}</div>
+                                        <div class="step-desc">${desc}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        ${this.renderSectionTitle('Escalation Contacts')}
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Role</th>
+                                        <th>Contact</th>
+                                        <th>For</th>
+                                        <th>Response</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Team Lead</td>
+                                        <td><span class="hl">@teamlead</span></td>
+                                        <td>General escalations, refunds, hostile customers</td>
+                                        <td>< 1 hr</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Finance</td>
+                                        <td><span class="hl">finance@company.com</span></td>
+                                        <td>Large refunds, billing disputes</td>
+                                        <td>4 hours</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Legal</td>
+                                        <td><span class="hl">legal@company.com</span></td>
+                                        <td>Threats, lawsuits, regulatory issues</td>
+                                        <td>Same day</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PR / Comms</td>
+                                        <td><span class="hl">pr@company.com</span></td>
+                                        <td>Media inquiries, press contacts</td>
+                                        <td>Same day</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        ${this.renderPageFooter('workflows', 'remote', 'Workflows', 'Remote Work')}
+                    </div>
+                `;
+            },
+
+            renderRemotePage() {
+                return `
+                    ${this.renderCover('blue', '🌐')}
+                    ${this.renderPageHeader('Remote Work · Module 6', 'Working Remotely', [
+                        { label: 'Required', live: true },
+                        { label: '🌐 100% Remote' }
+                    ], '#2A5EB4', '#EBF0FB')}
+                    <div class="page-body">
+                        ${this.renderCallout('ℹ️', '<strong>Remote-first culture:</strong> We operate as a fully distributed team. Transparency, communication, and documentation are the glue that holds us together. When in doubt, over-communicate.', '#2A5EB4', '#EBF0FB')}
+                        
+                        ${this.renderToggleBlock('⏰', 'Availability & Hours', '', `
+                            <ul class="checklist">
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Maintain your scheduled shift hours consistently</span></li>
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Set your Slack status to reflect your real availability</span></li>
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Respond to Slack pings within 15 minutes during your shift</span></li>
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Notify Team Lead if you'll be unavailable or need to start late</span></li>
+                                <li class="checklist-item"><div class="checkbox"></div><span class="checklist-text">Log off and set away status clearly at end of shift</span></li>
+                            </ul>
+                        `, true)}
+
+                        ${this.renderToggleBlock('🖥️', 'Tech Setup Requirements', '', `
+                            <ul class="checklist">
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Reliable broadband internet (minimum 25 Mbps download)</span></li>
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Quiet, dedicated workspace for customer calls</span></li>
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Headset with microphone tested and functioning</span></li>
+                                <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Webcam functional and positioned correctly</span></li>
+                                <li class="checklist-item"><div class="checkbox"></div><span class="checklist-text">Backup internet connection (mobile hotspot recommended)</span></li>
+                                <li class="checklist-item"><div class="checkbox"></div><span class="checklist-text">VPN installed, configured, and tested</span></li>
+                            </ul>
+                        `)}
+
+                        ${this.renderToggleBlock('📅', 'Daily Standup Format', '', `
+                            <p style="font-size: 14px; color: #5A5350; line-height: 1.7; margin-bottom: 10px;">Post in <span class="hl">#daily-standup</span> before your shift starts each day. Keep it to 3 lines:</p>
+                            <div class="code-block">
+                                <span class="code-label">Format</span>
+                                <code class="code-content">✅ Yesterday: [What I completed]
+🔄 Today: [What I'm working on]
+🚧 Blockers: [Anything blocking progress, or "None"]</code>
+                            </div>
+                        `)}
+
+                        ${this.renderToggleBlock('🔋', 'Preventing Remote Burnout', '', `
+                            <p style="font-size: 14px; color: #5A5350; line-height: 1.7; margin-bottom: 10px;">Remote work blurs the line between work and personal time. Protect your wellbeing by setting clear boundaries.</p>
+                            <ul class="checklist">
+                                <li class="checklist-item"><div class="checkbox"></div><span class="checklist-text">Take your scheduled breaks — step away from the screen</span></li>
+                                <li class="checklist-item"><div class="checkbox"></div><span class="checklist-text">Don't work outside scheduled hours without explicit approval</span></li>
+                                <li class="checklist-item"><div class="checkbox"></div><span class="checklist-text">Mute Slack notifications after your shift ends</span></li>
+                                <li class="checklist-item"><div class="checkbox"></div><span class="checklist-text">Flag concerns to Team Lead early — don't struggle in silence</span></li>
+                            </ul>
+                        `)}
+
+                        ${this.renderPageFooter('escalation', 'glossary', 'Escalation', 'Glossary')}
+                    </div>
+                `;
+            },
+
+            renderGlossaryPage() {
+                const terms = [
+                    ['CRM', 'Customer Relationship Management — software used to track all customer data and interaction history (e.g. HubSpot, Salesforce).'],
+                    ['SLA', 'Service Level Agreement — the agreed maximum response time, defined per brand and channel.'],
+                    ['Triage', 'The process of reviewing and categorizing incoming tickets by type and urgency.'],
+                    ['Escalation', 'Transferring a case to a higher authority when it exceeds the current agent\'s scope or authority.'],
+                    ['Ticket', 'A logged record of a customer interaction or issue tracked within the helpdesk system.'],
+                    ['CSAT', 'Customer Satisfaction Score — a metric collected via post-interaction surveys.'],
+                    ['FRT', 'First Response Time — how long it takes for the first agent reply to reach a customer.'],
+                    ['B2B', 'Business-to-Business — serving business clients rather than individual consumers.'],
+                    ['B2C', 'Business-to-Consumer — serving individual customers directly.'],
+                    ['Async', 'Asynchronous communication — messages without an expected immediate live reply.'],
+                    ['Standup', 'A brief daily check-in (async via Slack) sharing focus and any blockers.'],
+                    ['Loom', 'An async screen recording tool used to share walkthroughs without a live meeting.']
+                ];
+
+                return `
+                    ${this.renderCover('charcoal', '📖')}
+                    ${this.renderPageHeader('Resources', 'Glossary', [
+                        { label: '📖 Reference' },
+                        { label: 'A–Z Terms' }
+                    ])}
+                    <div class="page-body">
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Term</th>
+                                        <th>Definition</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${terms.map(([term, def]) => `
+                                        <tr>
+                                            <td><strong>${term}</strong></td>
+                                            <td>${def}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                        ${this.renderPageFooter('remote', 'faq', 'Remote Work', 'FAQ')}
+                    </div>
+                `;
+            },
+
+            renderFAQPage() {
+                return `
+                    ${this.renderCover('navy', '❓')}
+                    ${this.renderPageHeader('Resources', 'Frequently Asked Questions', [
+                        { label: '❓ New Team Members' }
+                    ], '#2A5EB4', '#EBF0FB')}
+                    <div class="page-body">
+                        ${this.renderToggleBlock('🔑', 'What if I don\'t have system access on my start date?', '', `
+                            <p style="font-size: 14px; color: #5A5350; line-height: 1.7;">Contact IT at <span class="hl">it@company.com</span> with your name, role, start date, and which systems you're missing. CC your Team Lead. Access should be provisioned within 48 hours of your start date.</p>
+                        `, true)}
+
+                        ${this.renderToggleBlock('💬', 'What if a customer asks something I don\'t know?', '', `
+                            <p style="font-size: 14px; color: #5A5350; line-height: 1.7;">Never guess. Say: <em>"That's a great question — let me confirm the correct answer and get back to you within [timeframe]."</em> Then research in this knowledge base, the CRM, or ask in <span class="hl">#cs-team</span> on Slack.</p>
+                        `)}
+
+                        ${this.renderToggleBlock('🤬', 'How do I handle an angry or abusive customer?', '', `
+                            <p style="font-size: 14px; color: #5A5350; line-height: 1.7;">Stay calm and professional. Acknowledge frustration without agreeing with inaccurate claims. If abusive, set a boundary: <em>"I want to help resolve this, but I need us to keep the conversation respectful."</em> If it continues, escalate to Team Lead via <span class="hl">#escalations</span> immediately.</p>
+                        `)}
+
+                        ${this.renderToggleBlock('📊', 'How is my performance measured?', '', `
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Metric</th>
+                                            <th>Description</th>
+                                            <th>Target</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>CSAT</td>
+                                            <td>Customer satisfaction survey score</td>
+                                            <td>≥ 90%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>FRT</td>
+                                            <td>First Response Time within SLA</td>
+                                            <td>100%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Resolution Rate</td>
+                                            <td>Tickets resolved without re-open</td>
+                                            <td>≥ 85%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Documentation</td>
+                                            <td>Internal notes completed on all tickets</td>
+                                            <td>100%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        `)}
+
+                        ${this.renderToggleBlock('🌐', 'What if my internet goes down during a shift?', '', `
+                            <p style="font-size: 14px; color: #5A5350; line-height: 1.7;">Switch to your backup connection (mobile hotspot) immediately. Notify your Team Lead via Slack or SMS within 5 minutes. This is why a backup connection is a required part of your setup.</p>
+                        `)}
+
+                        ${this.renderToggleBlock('🆕', 'What does my first week look like?', '', `
+                            <div class="step-list">
+                                ${[
+                                    ['Day 1 — Setup & Access', 'Confirm all system access, complete onboarding forms, and introduce yourself in #cs-team.'],
+                                    ['Day 2 — Knowledge Base', 'Read all sections of this knowledge base. Flag any questions in #cs-team.'],
+                                    ['Day 3 — Shadow Tickets', 'Review 10 closed tickets to understand how real issues were handled.'],
+                                    ['Days 4–5 — Live Tickets', 'Begin handling tickets independently with Team Lead available for support.']
+                                ].map(([title, desc], i) => `
+                                    <div class="step-item">
+                                        <div class="step-number" style="background: #2A5EB4;">${i + 1}</div>
+                                        <div>
+                                            <div class="step-title">${title}</div>
+                                            <div class="step-desc">${desc}</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `)}
+
+                        ${this.renderPageFooter('glossary', 'changelog', 'Glossary', 'Change Log')}
+                    </div>
+                `;
+            },
+
+            renderChangeLogPage() {
+                return `
+                    ${this.renderCover('forest', '📋')}
+                    ${this.renderPageHeader('Resources', 'Change Log', [
+                        { label: '📋 Version History' },
+                        { label: 'Maintained by Team Lead' }
+                    ], '#2E7D55', '#EBFAF2')}
+                    <div class="page-body">
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Section</th>
+                                        <th>Change</th>
+                                        <th>By</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="hl">2025-07</span></td>
+                                        <td>All Sections</td>
+                                        <td>Initial knowledge base created and published for remote CS team</td>
+                                        <td>Team Lead</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="hl">2025-07</span></td>
+                                        <td>Escalation</td>
+                                        <td>Added escalation contact table for Finance, Legal, and PR</td>
+                                        <td>Team Lead</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="hl">TBD</span></td>
+                                        <td>Brands</td>
+                                        <td>Full brand policy sheets to be added per brand</td>
+                                        <td>—</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="hl">TBD</span></td>
+                                        <td>Workflows</td>
+                                        <td>Refund threshold amount to be confirmed with Finance team</td>
+                                        <td>—</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="notice notice-info">
+                            <span class="notice-icon">ℹ️</span>
+                            <div>This knowledge base is a living document. All team members are encouraged to flag outdated information via <strong>#cs-team</strong> on Slack.</div>
+                        </div>
+                        ${this.renderPageFooter('faq', 'home', 'FAQ', '↩ Back to Home')}
+                    </div>
+                `;
+            },
+
+            renderCRMPage() {
+                return `
+                    ${this.renderCover('neutral', '📊')}
+                    ${this.renderPageHeader('Tools & Systems', 'CRM System', [
+                        { label: 'HubSpot / Salesforce', live: true }
+                    ])}
+                    <div class="page-body">
+                        ${this.renderCallout('📊', 'The CRM is your central record of all customer data, interactions, and history. Every customer contact must be logged here. Accuracy in the CRM directly impacts reporting and handoffs.')}
+                        
+                        ${this.renderSectionTitle('Key CRM Tasks')}
+                        
+                        <div class="step-list">
+                            ${[
+                                ['Look up customer record', 'Search by email, order number, or full name. Verify you have the correct customer before accessing data.'],
+                                ['Log interaction notes', 'Add a note after every contact: date, channel, issue summary, resolution or next steps.'],
+                                ['Update contact properties', 'Keep address, email, and preferences current. Flag issues with the \'Contact Data Issue\' tag.'],
+                                ['Tag correctly', 'Apply ticket category tags: billing · shipping · product · account · other']
+                            ].map(([title, desc], i) => `
+                                <div class="step-item">
+                                    <div class="step-number">${i + 1}</div>
+                                    <div>
+                                        <div class="step-title">${title}</div>
+                                        <div class="step-desc">${desc}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="notice notice-info">
+                            <span class="notice-icon">ℹ️</span>
+                            <div>Never share customer data externally or with unauthorized team members. All data access is logged and audited.</div>
+                        </div>
+
+                        ${this.renderPageFooter('tools-overview', 'ticketing', 'Tools Overview', 'Ticketing')}
+                    </div>
+                `;
+            },
+
+            renderTicketingPage() {
+                return `
+                    ${this.renderCover('neutral', '🎫')}
+                    ${this.renderPageHeader('Tools & Systems', 'Ticketing & Helpdesk', [
+                        { label: 'Zendesk / Freshdesk', live: true }
+                    ])}
+                    <div class="page-body">
+                        ${this.renderCallout('🎫', 'All customer issues are tracked as tickets. Ticket hygiene — correct tagging, timely updates, proper closure — is mandatory and reviewed weekly by the Team Lead.')}
+                        
+                        ${this.renderSectionTitle('Ticket Statuses')}
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>Meaning</th>
+                                        <th>Action Required</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="tag tag-green">Open</span></td>
+                                        <td>New or pending agent action</td>
+                                        <td>Respond within SLA immediately</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="tag tag-gray">Pending</span></td>
+                                        <td>Waiting on customer reply</td>
+                                        <td>Follow up after 48 hours</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="tag tag-blue">Escalated</span></td>
+                                        <td>Passed to Team Lead</td>
+                                        <td>Monitor only — do not re-engage</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="tag tag-gray">Solved</span></td>
+                                        <td>Issue resolved by agent</td>
+                                        <td>Confirm internal notes are complete</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="tag tag-gray">Closed</span></td>
+                                        <td>Auto-closed 72 hrs after solved</td>
+                                        <td>No action needed</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        ${this.renderSectionTitle('Ticket Hygiene Rules')}
+                        
+                        <ul class="checklist">
+                            <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Every ticket must have at least one internal note with context</span></li>
+                            <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Tags must be applied within 5 minutes of opening</span></li>
+                            <li class="checklist-item"><div class="checkbox checked">✓</div><span class="checklist-text checked">Never close a ticket without confirming with the customer</span></li>
+                            <li class="checklist-item"><div class="checkbox"></div><span class="checklist-text">Pending tickets must be followed up after 48 hours of no reply</span></li>
+                            <li class="checklist-item"><div class="checkbox"></div><span class="checklist-text">Escalated tickets must not be re-engaged without Team Lead instruction</span></li>
+                        </ul>
+
+                        ${this.renderPageFooter('crm', 'comms', 'CRM', 'Communication')}
+                    </div>
+                `;
+            },
+
+            renderCommsPage() {
+                return `
+                    ${this.renderCover('neutral', '💬')}
+                    ${this.renderPageHeader('Tools & Systems', 'Communication Tools', [
+                        { label: 'Slack · Zoom · Loom', live: true }
+                    ])}
+                    <div class="page-body">
+                        ${this.renderCallout('💬', 'Communication tools are the backbone of remote collaboration. Use the right tool for the right purpose — async-first is our default approach.')}
+                        
+                        <div class="card-grid" style="grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));">
+                            ${[
+                                ['💬', 'Slack', 'Primary async comms. Team channels, escalations, standups, quick questions.', 'Always On', 'green'],
+                                ['📹', 'Zoom', 'Scheduled meetings, 1:1 check-ins, team trainings, and live calls.', 'Scheduled', 'blue'],
+                                ['🎥', 'Loom', 'Async video updates, bug reports, and walkthroughs.', 'Async Video', 'gray']
+                            ].map(([icon, title, desc, tag, color]) => `
+                                <div class="card" style="cursor: default;">
+                                    <div class="card-icon">${icon}</div>
+                                    <div class="card-title">${title}</div>
+                                    <div class="card-desc">${desc}</div>
+                                    <span class="tag tag-${color}">${tag}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        ${this.renderSectionTitle('Slack Channel Guide')}
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Channel</th>
+                                        <th>Used For</th>
+                                        <th>Response Expected</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="hl">#cs-team</span></td>
+                                        <td>General team updates, questions, knowledge sharing</td>
+                                        <td>During your shift</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="hl">#escalations</span></td>
+                                        <td>Urgent escalations requiring Team Lead attention</td>
+                                        <td>Immediately</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="hl">#daily-standup</span></td>
+                                        <td>Async daily check-in posts</td>
+                                        <td>Before shift start</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Direct Message</td>
+                                        <td>Personal or sensitive matters</td>
+                                        <td>Within 1 hour</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>Formal or external communications</td>
+                                        <td>Same business day</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        ${this.renderPageFooter('ticketing', 'workflows', 'Ticketing', 'Workflows')}
+                    </div>
+                `;
+            },
+
+            renderBrandStandardsPage() {
+                return `
+                    ${this.renderCover('amber', '📐')}
+                    ${this.renderPageHeader('Brands', 'Standards & Guidelines', [
+                        { label: '🚧 Coming Soon' }
+                    ], '#B45A00', '#FFF4E6')}
+                    <div class="page-body">
+                        ${this.renderCallout('🚧', 'This section is under construction. Full brand standard sheets will be uploaded by the Team Lead. Ask in <span class="hl">#cs-team</span> on Slack if you need information urgently.', '#B45A00', '#FFF4E6')}
+                        ${this.renderPageFooter('brand-voice', 'tools-overview', 'Brand Voice', 'Tools')}
+                    </div>
+                `;
+            }
+        };
+
+        // Initialize the app when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
